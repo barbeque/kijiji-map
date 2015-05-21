@@ -21,7 +21,7 @@ def geolocate(config, address):
     result_object = result.json()
     result_results = result_object["results"]
     if len(result_results) < 1:
-        raise GeolocateFailure("Could not find a single result for address '{}'" % address)
+        raise GeolocateFailure("Could not find a single result for address '%s'" % address)
 
     # grab first geometry result to extract lat-long
     result_geometry = result_results[0]["geometry"]
@@ -41,3 +41,8 @@ if __name__ == '__main__':
     config = configure('secrets.yml')
     ll = geolocate(config, '1600 pennsylvania avenue washington dc')
     print ll
+
+    try:
+        ll = geolocate(config, "An impossible address that will never be resolved")
+    except GeolocateFailure:
+        print 'Got a geolocate failure as expected.'
