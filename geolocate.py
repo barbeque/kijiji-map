@@ -44,5 +44,6 @@ if __name__ == '__main__':
 
     try:
         ll = geolocate(config, "An impossible address that will never be resolved")
+        assert False, "Expected a geolocate failure on the impossible address"
     except GeolocateFailure:
         print 'Got a geolocate failure as expected.'
