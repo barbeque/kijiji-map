@@ -1,5 +1,6 @@
 import yaml
 import requests
+import sys
 
 # The name of the API key token that must be in secrets.yml
 API_KEY_PATH = "geolocation_api_key"
@@ -33,9 +34,13 @@ def geolocate(config, address):
     
 def configure(secretsFilePath):
     # load from config
-    with open(secretsFilePath, 'rb') as fp:
-        config = yaml.load(fp)
-        return config
+    try:
+        with open(secretsFilePath, 'rb') as fp:
+            config = yaml.load(fp)
+            return config
+    except FileNotFoundError:
+        print 'Expected a secrets YAML file named "{}" but none was found.'.format(secretsFilePath)
+        raise
         
 if __name__ == '__main__':
     config = configure('secrets.yml')
